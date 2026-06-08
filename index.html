@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Albaugh - Agricultural Solutions</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --green:#1a7a2e;--dark:#0d1f0f;--gold:#f5c842;--light:#f0f7f1;
+    --c1:#2ecc71;--c2:#e74c3c;--c3:#3498db;--c4:#9b59b6;--c5:#e67e22;
+    --c6:#1abc9c;--c7:#e91e63;--c8:#ff5722;--c9:#607d8b;--c10:#795548;
+    --c11:#4caf50;--c12:#f44336;--c13:#2196f3;--c14:#9c27b0;--c15:#ff9800;
+    --c16:#00bcd4;--c17:#8bc34a;--c18:#673ab7;--c19:#009688;--c20:#ffc107;
+  }
+  body{font-family:'Segoe UI',sans-serif;background:#0d1f0f;color:#fff}
+
+  /* NAV */
+  nav{background:rgba(0,0,0,.85);padding:14px 30px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:999;backdrop-filter:blur(8px);border-bottom:2px solid var(--gold)}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--green),var(--gold));border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:18px;color:#fff}
+  .logo-text{font-size:24px;font-weight:900;color:var(--gold);letter-spacing:2px}
+  .logo-sub{font-size:10px;color:#aaa;letter-spacing:1px}
+  .nav-links{display:flex;gap:20px}
+  .nav-links a{color:#ddd;text-decoration:none;font-size:13px;font-weight:600;letter-spacing:1px;transition:.3s}
+  .nav-links a:hover{color:var(--gold)}
+
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#0d1f0f 0%,#1a3a1a 50%,#0a2a15 100%);padding:80px 40px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+  .hero h1{font-size:52px;font-weight:900;color:#fff;letter-spacing:4px}
+  .hero h1 span{color:var(--gold)}
+  .hero p{color:#aaa;font-size:16px;margin:14px 0 30px;letter-spacing:1px}
+  .hero-badges{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .badge{background:rgba(245,200,66,.15);border:1px solid var(--gold);color:var(--gold);padding:6px 18px;border-radius:20px;font-size:12px;font-weight:700;letter-spacing:1px}
+
+  /* SEARCH */
+  .search-bar{background:#111;padding:24px 40px;display:flex;gap:12px;align-items:center;justify-content:center;border-bottom:1px solid #222}
+  .search-bar input{width:420px;max-width:100%;padding:12px 20px;border-radius:30px;border:2px solid #333;background:#1a1a1a;color:#fff;font-size:14px;outline:none;transition:.3s}
+  .search-bar input:focus{border-color:var(--gold)}
+  .search-bar select{padding:12px 16px;border-radius:30px;border:2px solid #333;background:#1a1a1a;color:#fff;font-size:13px;outline:none;cursor:pointer}
+  .search-bar select:focus{border-color:var(--gold)}
+
+  /* STATS */
+  .stats{display:flex;justify-content:center;gap:0;background:#111;flex-wrap:wrap;border-bottom:1px solid #222}
+  .stat{padding:20px 40px;text-align:center;border-right:1px solid #222}
+  .stat:last-child{border-right:none}
+  .stat-num{font-size:28px;font-weight:900;color:var(--gold)}
+  .stat-label{font-size:11px;color:#888;letter-spacing:1px;margin-top:2px}
+
+  /* PRODUCTS SECTION */
+  .products-section{padding:40px 30px}
+  .section-title{text-align:center;font-size:28px;font-weight:900;color:var(--gold);letter-spacing:3px;margin-bottom:8px}
+  .section-sub{text-align:center;color:#888;font-size:13px;margin-bottom:36px;letter-spacing:1px}
+
+  .product-group{margin-bottom:50px}
+  .group-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:12px;border-bottom:2px solid}
+  .group-dot{width:16px;height:16px;border-radius:50%;flex-shrink:0}
+  .group-name{font-size:20px;font-weight:900;letter-spacing:2px}
+  .group-count{font-size:12px;padding:4px 12px;border-radius:20px;font-weight:700;margin-left:auto}
+
+  .product-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .product-card{border-radius:12px;padding:16px;position:relative;cursor:pointer;transition:.25s;border:1px solid rgba(255,255,255,.08)}
+  .product-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,.5)}
+  .pack-icon{font-size:26px;margin-bottom:8px}
+  .product-name{font-size:13px;font-weight:800;letter-spacing:.5px;line-height:1.3}
+  .product-pack{font-size:11px;opacity:.75;margin-top:4px;font-weight:600}
+  .product-badge{position:absolute;top:10px;right:10px;font-size:9px;padding:2px 7px;border-radius:10px;font-weight:900;background:rgba(0,0,0,.4);color:#fff}
+
+  /* CONTACT */
+  .contact{background:#0a1a0a;padding:60px 40px;text-align:center;border-top:2px solid var(--gold)}
+  .contact h2{font-size:28px;font-weight:900;color:var(--gold);margin-bottom:8px;letter-spacing:3px}
+  .contact p{color:#888;margin-bottom:30px;font-size:14px}
+  .contact-cards{display:flex;justify-content:center;gap:20px;flex-wrap:wrap}
+  .contact-card{background:#111;border:1px solid #333;border-radius:14px;padding:24px 36px;min-width:220px}
+  .contact-card .icon{font-size:28px;margin-bottom:10px}
+  .contact-card .label{font-size:11px;color:#888;letter-spacing:1px;margin-bottom:6px}
+  .contact-card .val{font-size:15px;font-weight:700;color:#fff}
+  .contact-card .val a{color:var(--gold);text-decoration:none}
+
+  footer{background:#060f06;padding:18px;text-align:center;font-size:12px;color:#555;letter-spacing:1px;border-top:1px solid #111}
+
+  /* MODAL */
+  .modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;align-items:center;justify-content:center}
+  .modal.open{display:flex}
+  .modal-box{background:#1a1a1a;border-radius:18px;padding:30px;max-width:400px;width:90%;border:2px solid var(--gold);text-align:center}
+  .modal-box h3{font-size:20px;font-weight:900;color:var(--gold);margin-bottom:8px}
+  .modal-box p{color:#aaa;font-size:13px;margin-bottom:20px}
+  .modal-close{background:var(--gold);color:#000;border:none;padding:10px 28px;border-radius:30px;cursor:pointer;font-weight:900;font-size:14px}
+
+  #no-results{display:none;text-align:center;padding:60px;color:#888;font-size:16px}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon">A</div>
+    <div>
+      <div class="logo-text">ALBAUGH</div>
+      <div class="logo-sub">AGRICULTURAL SOLUTIONS</div>
+    </div>
+  </div>
+  <div class="nav-links">
+    <a href="#products">Products</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>ALBAUGH <span>INDIA</span></h1>
+  <p>Premium Agricultural Crop Protection Products</p>
+  <div class="hero-badges">
+    <span class="badge">🌱 TRUSTED BRAND</span>
+    <span class="badge">🔬 QUALITY ASSURED</span>
+    <span class="badge">🌾 CROP PROTECTION</span>
+    <span class="badge">🇮🇳 MADE FOR INDIA</span>
+  </div>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-num" id="total-count">150+</div><div class="stat-label">PRODUCT VARIANTS</div></div>
+  <div class="stat"><div class="stat-num">20+</div><div class="stat-label">PRODUCT LINES</div></div>
+  <div class="stat"><div class="stat-num">100%</div><div class="stat-label">QUALITY TESTED</div></div>
+  <div class="stat"><div class="stat-num">📞</div><div class="stat-label">SUPPORT AVAILABLE</div></div>
+</div>
+
+<div class="search-bar">
+  <input type="text" id="searchInput" placeholder="🔍  Search products..." oninput="filterProducts()">
+  <select id="groupFilter" onchange="filterProducts()">
+    <option value="">All Products</option>
+  </select>
+</div>
+
+<div class="products-section" id="products">
+  <div class="section-title">OUR PRODUCTS</div>
+  <div class="section-sub">Click any product card to enquire</div>
+  <div id="products-container"></div>
+  <div id="no-results">No products found. Try a different search.</div>
+</div>
+
+<div class="contact" id="contact">
+  <h2>CONTACT US</h2>
+  <p>Get in touch for orders, pricing & support</p>
+  <div class="contact-cards">
+    <div class="contact-card">
+      <div class="icon">📞</div>
+      <div class="label">PHONE / WHATSAPP</div>
+      <div class="val"><a href="tel:9840268972">9840268972</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="icon">✉️</div>
+      <div class="label">EMAIL</div>
+      <div class="val"><a href="mailto:sskrotamsalem@gmail.com">sskrotamsalem@gmail.com</a></div>
+    </div>
+    <div class="contact-card">
+      <div class="icon">🌾</div>
+      <div class="label">COMPANY</div>
+      <div class="val">ALBAUGH INDIA</div>
+    </div>
+  </div>
+</div>
+
+<footer>© 2024 ALBAUGH INDIA. All Rights Reserved. | sskrotamsalem@gmail.com | 9840268972</footer>
+
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <h3 id="modal-title"></h3>
+    <p id="modal-pack"></p>
+    <p>For pricing & availability, contact us:</p>
+    <p style="color:var(--gold);font-weight:700;margin:10px 0">📞 9840268972</p>
+    <p style="color:var(--gold);font-weight:700;margin-bottom:20px">✉️ sskrotamsalem@gmail.com</p>
+    <button class="modal-close" onclick="closeModal()">CLOSE</button>
+  </div>
+</div>
+
+<script>
+const rawProducts = [
+  "AGFAN (10X1 LTR)","BAMAKO (40X250 ML)","BAMAKO (50X100 ML)","BETRIN A (20 X 500 Gm)","BETRIN A (10 X 1 Kg)",
+  "BISTON ( 100 X 100 ML)","BISTON ( 40 X 250 ML)","BISTON ( 10 X 1 LTR)",
+  "Bosforus Gold (10X1 Ltr)","BOSFORUS GOLD (20X500 ML)","BOSFORUS GOLD (40X250 ML)","BOSFORUS GOLD (50X100 ML)",
+  "WBUNTEN (20X250 GM)",
+  "Cartal GR (5X5 Kg)","CARTAL SP (100 X 100 Gm)","CARTAL SP (20X500 Gm)","CARTAL SP (40X250 Gm)",
+  "CHOKOHIK (100X100 GM)","CHOKOHIK (20X500 GM)",
+  "CIALOTAN (10X1 LTR)","CIALOTAN (20X500 ML)","CIALOTAN (40X250 ML)","CIALOTAN ULTRA (50X100 ML)","CIALOTAN ULTRA (40X250 ML)",
+  "CONTAN (10X1 LTR)","CONTAN (20X500 ML)","CONTAN (40X250 ML)","CONTAN (50X100 ML)",
+  "DEFUNG ( 60 X 100 GM)","DEFUNG (12X600 GM)","DEFUNG (24X300 GM)","DEFUNG (6X1.2 KG)",
+  "EUKADO PLUS (30 X 333 GM)","EUKADO PLUS (40 X 133.2 GM)",
+  "G RELIC (10 X 1 Ltr)","G RELIC (20X500 ML)","G RELIC (40 X 250 ML)","G Relic (100 X 100 Ml)",
+  "GAMELY (20X500 ML)","GAMELY (10X1 LTR)",
+  "ICARUS PLUS (10X1 LTR)","ICARUS PLUS (20X500 ML)",
+  "IMPETU (12 X 500 GM)","IMPETU (6 X 1 Kg)",
+  "IXUS (10X1 LTR)","IXUS (20X500 ML)","IXUS (40X250 ML)","IXUS (50X100 ML)",
+  "IXUS PLUS (100X40 GM)","IXUS PLUS (50X100 GM)",
+  "JASTER (10X1 LTR)","JASTER (20X500 ML)","JASTER (50X100 ML)",
+  "LUFOSAT (10 X 1 LTR)","LUFOSAT (20 X 500 ML)",
+  "MAIZOATE (10X500 Gm)","MAIZOATE (20X500 Gm)","MAIZOATE (50X100 GM)","MAIZOATE (6X1 Kg)","MAIZOATE (40X250 Gm)","MAIZOATE (50X100 Gm)",
+  "MAIZOATE GOLD (100X100 ML)","MAIZOATE GOLD (40X250 ML)","MAIZOATE GOLD (10X1 LTR)","MAIZOATE GOLD (20X500 ML)",
+  "Milor Mz (40X250 Gm)","Milor Mz (100X100 Gm)","Milor Mz (20X500 Gm)",
+  "MORFUS (12X500 GM)",
+  "MUCURA (10X1 KG)","MUCURA (20X500 GM)",
+  "NISHUDAK (10X1 LTR)","NISHUDAK (20X500 ML)","NISHUDAK-ULTRA (100X100 GM)",
+  "OBOLO STAR (50X100 ML)","OBOLO STAR (40X250 ML)",
+  "OCILIA (100X100 GM)","OCILIA (40X250 GM)",
+  "PARADIZE ( 10 X 1L)","PARADIZE ( 100 X 100ML)","PARADIZE ( 40 X 250ML)",
+  "Pinaxo (10X1 Ltr)","Pinaxo (20x500 ML)","Pinaxo (50x100 ML)",
+  "PIXMA (100X100 GM)","PIXMA (10X1 KG)","PIXMA (20X500 GM)","PIXMA (40X250 GM)",
+  "PYTROZ (80X120 GM)",
+  "RODAMINE (10X1 LTR)","RODAMINE (20X500 ML)",
+  "RODAZIM (40X250 GM)",
+  "Roflufent (40X250 Ml)","Roflufent (50X100 Ml)",
+  "ROTAPRID (40X250 ML)","ROTAPRID (50X100 ML)",
+  "ROTRIF SUPER (20X500 ML)","ROTRIF SUPER (40X250 ML)","ROTRIF SUPER (50 X 100 ML)",
+  "ROTRIF ULTRA (100X80 ML)","ROTRIF ULTRA (10X1 LTR)","ROTRIF ULTRA (40X200 ML)",
+  "SALVIO (20X500 ML)","SALVIO (50X200 ML)","SALVIO (50X100 ML)",
+  "SPREDEW ( 40 X 250 ML )","SPREDEW ( 50 X 100 ML )","SPREDEW (100 X 50 ML )","SPREDEW (20 X 500 ML )",
+  "TALANTE (40X250 GM)","TALANTE (50X100 GM)",
+  "TESSA (4X230 ML)","TESSA (8X115 ML)",
+  "THIME (10X1 KG)","THIME (20X500 GM)",
+  "TOLEDO-S (10X1 KG)","TOLEDO-S (20X500 GM)","TOLEDO-S (40X250 GM)",
+  "V -MYCIN (10X1 LTR)","V -MYCIN (20X500 ML)",
+  "XSTRATA GOLD (50X100 ML)",
+  "ANTALIS (15X700 ML)"
+];
+
+const colorPalette = [
+  {bg:'rgba(46,204,113,.13)',border:'#2ecc71',text:'#2ecc71',dark:'#1a5c33'},
+  {bg:'rgba(231,76,60,.13)',border:'#e74c3c',text:'#e74c3c',dark:'#7a1f1a'},
+  {bg:'rgba(52,152,219,.13)',border:'#3498db',text:'#3498db',dark:'#1a4d7a'},
+  {bg:'rgba(155,89,182,.13)',border:'#9b59b6',text:'#9b59b6',dark:'#4a1f5c'},
+  {bg:'rgba(230,126,34,.13)',border:'#e67e22',text:'#e67e22',dark:'#7a3d10'},
+  {bg:'rgba(26,188,156,.13)',border:'#1abc9c',text:'#1abc9c',dark:'#0e5c4a'},
+  {bg:'rgba(233,30,99,.13)',border:'#e91e63',text:'#e91e63',dark:'#7a0e33'},
+  {bg:'rgba(255,87,34,.13)',border:'#ff5722',text:'#ff5722',dark:'#7a2810'},
+  {bg:'rgba(96,125,139,.18)',border:'#90a4ae',text:'#90a4ae',dark:'#37474f'},
+  {bg:'rgba(121,85,72,.18)',border:'#a1887f',text:'#a1887f',dark:'#4e342e'},
+  {bg:'rgba(76,175,80,.13)',border:'#66bb6a',text:'#66bb6a',dark:'#2e7d32'},
+  {bg:'rgba(244,67,54,.13)',border:'#ef5350',text:'#ef5350',dark:'#b71c1c'},
+  {bg:'rgba(33,150,243,.13)',border:'#42a5f5',text:'#42a5f5',dark:'#0d47a1'},
+  {bg:'rgba(156,39,176,.13)',border:'#ab47bc',text:'#ab47bc',dark:'#4a148c'},
+  {bg:'rgba(255,152,0,.13)',border:'#ffa726',text:'#ffa726',dark:'#e65100'},
+  {bg:'rgba(0,188,212,.13)',border:'#26c6da',text:'#26c6da',dark:'#00838f'},
+  {bg:'rgba(139,195,74,.13)',border:'#9ccc65',text:'#9ccc65',dark:'#33691e'},
+  {bg:'rgba(103,58,183,.13)',border:'#7e57c2',text:'#7e57c2',dark:'#311b92'},
+  {bg:'rgba(0,150,136,.13)',border:'#26a69a',text:'#26a69a',dark:'#004d40'},
+  {bg:'rgba(255,193,7,.13)',border:'#ffca28',text:'#ffca28',dark:'#f57f17'},
+];
+
+const icons = ['🌿','🧪','🌾','💊','🔬','🌱','⚗️','🍃','🌻','🧬','🌽','🫧','🦠','🌳','💧','🧫','🌲','🔭','🌊','⭐'];
+
+// Group products by base name
+function getBaseName(p) {
+  return p.replace(/\s*\(.*\)/, '').replace(/-\s*M\s*$/, '').trim().toUpperCase();
+}
+
+function buildGroups() {
+  const map = {};
+  rawProducts.forEach(p => {
+    const base = getBaseName(p);
+    if (!map[base]) map[base] = [];
+    // avoid exact duplicates
+    const clean = p.trim().replace(/\s*-\s*M\s*$/, '').trim();
+    if (!map[base].find(x => x.toLowerCase() === clean.toLowerCase())) {
+      map[base].push(clean);
+    }
+  });
+  return map;
+}
+
+const groups = buildGroups();
+const groupNames = Object.keys(groups).sort();
+let colorMap = {};
+groupNames.forEach((g, i) => { colorMap[g] = colorPalette[i % colorPalette.length]; });
+
+// Populate filter
+const sel = document.getElementById('groupFilter');
+groupNames.forEach(g => {
+  const o = document.createElement('option');
+  o.value = g; o.textContent = g;
+  sel.appendChild(o);
+});
+
+function getPackSize(p) {
+  const m = p.match(/\(([^)]+)\)/);
+  return m ? m[1] : '';
+}
+
+function openModal(name, pack) {
+  document.getElementById('modal-title').textContent = name;
+  document.getElementById('modal-pack').textContent = 'Pack: ' + pack;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+
+function renderProducts(filter = '', groupFilter = '') {
+  const container = document.getElementById('products-container');
+  container.innerHTML = '';
+  let totalShown = 0;
+
+  groupNames.forEach((gName, gi) => {
+    if (groupFilter && gName !== groupFilter) return;
+    const prods = groups[gName].filter(p => {
+      if (!filter) return true;
+      return p.toLowerCase().includes(filter.toLowerCase());
+    });
+    if (!prods.length) return;
+    totalShown += prods.length;
+
+    const col = colorMap[gName];
+    const icon = icons[gi % icons.length];
+
+    const section = document.createElement('div');
+    section.className = 'product-group';
+
+    const header = document.createElement('div');
+    header.className = 'group-header';
+    header.style.borderColor = col.border;
+    header.innerHTML = `
+      <div class="group-dot" style="background:${col.border}"></div>
+      <div class="group-name" style="color:${col.text}">${gName}</div>
+      <div class="group-count" style="background:${col.bg};color:${col.text};border:1px solid ${col.border}">${prods.length} variants</div>`;
+    section.appendChild(header);
+
+    const grid = document.createElement('div');
+    grid.className = 'product-cards';
+
+    prods.forEach(p => {
+      const pack = getPackSize(p);
+      const card = document.createElement('div');
+      card.className = 'product-card';
+      card.style.background = col.bg;
+      card.style.borderColor = col.border;
+      card.innerHTML = `
+        <div class="pack-icon">${icon}</div>
+        <div class="product-name" style="color:${col.text}">${gName}</div>
+        <div class="product-pack" style="color:${col.text}">${pack}</div>`;
+      card.onclick = () => openModal(gName, pack);
+      grid.appendChild(card);
+    });
+
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+
+  document.getElementById('no-results').style.display = totalShown === 0 ? 'block' : 'none';
+  document.getElementById('total-count').textContent = totalShown + '+';
+}
+
+function filterProducts() {
+  const q = document.getElementById('searchInput').value;
+  const g = document.getElementById('groupFilter').value;
+  renderProducts(q, g);
+}
+
+renderProducts();
+document.getElementById('total-count').textContent = rawProducts.length + '+';
+
+// close modal on outside click
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+</script>
+</body>
+</html>
